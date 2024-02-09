@@ -1,0 +1,18 @@
+{
+  "name": "netflix-signup-backend",
+  "version": "1.0.0",
+  "description": "This is the backend for thee netflix signup clone",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "Basha coder",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.3"
+  }
+}
