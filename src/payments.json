@@ -1,0 +1,23 @@
+{
+  "payments": [
+    {
+      "cardNumber": "163",
+      "expirationDate": "25",
+      "cvv": "987",
+      "firstName": "basha"
+    },
+    {
+      "cardNumber": "113",
+      "expirationDate": "25",
+      "cvv": "987",
+      "firstName": "basha"
+    },
+    {
+      "cardNumber": "113",
+      "expirationDate": "25",
+      "cvv": "987",
+      "firstName": "basha",
+      "lastName": "coder"
+    }
+  ]
+}

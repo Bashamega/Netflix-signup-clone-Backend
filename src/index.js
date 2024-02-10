@@ -1,32 +1,62 @@
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs')
 
 const app = express();
 app.use(cors());
-app.get('/netflixpayment', (req, res)=>{
+app.get('/paymentInfo', (req, res) => {
+    const filePath = __dirname + "/payments.json"
+    res.sendFile(filePath)
+})
+app.get('/netflixpayment', (req, res) => {
     try {
-        const {cardNumber, expirationDate, cvv, firstName, lastName} = req.query
-        if(!cardNumber){
-            res.status(500).json({message:'Please provide a Card Number'})
+        const { cardNumber, expirationDate, cvv, firstName, lastName } = req.query
+        if (!cardNumber) {
+            res.status(500).json({ message: 'Please provide a Card Number' })
 
-        }else if(!expirationDate){
-            res.status(500).json({message:'Please provide an expiration date'})
+        } else if (!expirationDate) {
+            res.status(500).json({ message: 'Please provide an expiration date' })
 
-        }else if(!cvv){
-            res.status(500).json({message:'Please provide a CVV '})
+        } else if (!cvv) {
+            res.status(500).json({ message: 'Please provide a CVV ' })
 
-        }else if(!firstName){
-            res.status(500).json({message:'Please provide a fist name'})
+        } else if (!firstName) {
+            res.status(500).json({ message: 'Please provide a fist name' })
 
-        }else{
+        } else {
             const obj = {
-                cardNumber:cardNumber,
-                expirationDate:expirationDate,
-                cvv:cvv,
-                firstName:firstName,
-                lastName:lastName
+                cardNumber: cardNumber,
+                expirationDate: expirationDate,
+                cvv: cvv,
+                firstName: firstName,
+                lastName: lastName
             }
-            res.status(500).json(obj)
+            const filePath = __dirname + "/payments.json"
+            fs.readFile(filePath, 'utf8', (err, data) => {
+                if (err) {
+                    console.log(err)
+                    res.status(500).json({
+                        message: 'A technical error has occurred'
+                    })
+                    return;
+                }
+                const paymentObject = JSON.parse(data);
+                paymentObject.payments.push(obj)
+                const updated = JSON.stringify(paymentObject, null, 2)
+                fs.writeFile(filePath, updated, 'utf8', (err) => {
+                    if (err) {
+                        console.log(err)
+                        res.status(500).json({
+                            message: 'A technical error has occurred'
+                        })
+                        return;
+                    }
+                    res.status(500).json({
+                        message: 'Added the info'
+                    })
+                })
+
+            })
         }
     } catch (error) {
         console.log(error)
@@ -36,6 +66,6 @@ app.get('/netflixpayment', (req, res)=>{
     }
 })
 
-app.listen(3001, ()=>{
+app.listen(3001, () => {
     console.log('Api started on port 3001')
 })
