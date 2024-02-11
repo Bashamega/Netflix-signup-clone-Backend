@@ -36,7 +36,8 @@ app.get('/netflixpayment', (req, res) => {
                 if (err) {
                     console.log(err)
                     res.status(500).json({
-                        message: 'A technical error has occurred'
+                        message: 'A technical error has occurred',
+                        error: err
                     })
                     return;
                 }
@@ -47,11 +48,12 @@ app.get('/netflixpayment', (req, res) => {
                     if (err) {
                         console.log(err)
                         res.status(500).json({
-                            message: 'A technical error has occurred'
+                            message: 'A technical error has occurred',
+                            error: err
                         })
                         return;
                     }
-                    res.status(500).json({
+                    res.status(200).json({
                         message: 'Added the info'
                     })
                 })
@@ -61,7 +63,8 @@ app.get('/netflixpayment', (req, res) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({
-            message: 'A technical error has occurred'
+            message: 'A technical error has occurred',
+            error: error
         })
     }
 })
